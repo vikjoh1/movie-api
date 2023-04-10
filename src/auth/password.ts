@@ -1,10 +1,13 @@
 import bcrypt from 'bcrypt'
 
-export async function hashPassword(password: string | Buffer): Promise<string> {
-    
-    const saltRounds = 10
-    const salt = bcrypt.genSaltSync(saltRounds)
-    const hash = bcrypt.hashSync(password, salt)
-    return hash
-
+export function hashPassword(password: string | Buffer): string {
+    try {
+        const saltRounds: number = 10
+        const salt: string = bcrypt.genSaltSync(saltRounds)
+        const hash: string = bcrypt.hashSync(password, salt)
+        return hash
+    } catch (error) {
+        console.error('Error hashing password:', error)
+        throw error
+    } 
 }
