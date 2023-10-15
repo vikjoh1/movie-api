@@ -11,3 +11,12 @@ export function hashPassword(password: string | Buffer): string {
         throw error
     } 
 }
+
+export function compare(plainPassword: string | Buffer, hashedPassword: string): boolean {
+  try {
+    return bcrypt.compareSync(plainPassword, hashedPassword)
+  } catch (error) {
+    console.error('Error comparing passwords:', error)
+    throw error
+  }
+}
