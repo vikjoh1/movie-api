@@ -97,3 +97,17 @@ export const changePassword = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Failed to change password.' })
   }
 }
+
+export const getUser = async (req: Request, res: Response) => {
+  const { userId } = req.body
+  try {
+    const user: IUser | null = await User.findById(userId)
+    if (!user) {
+      return res.status(400).json({ error: 'Invalid user.' })
+    }
+
+    res.status(200).json({ user })
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to get user.' })
+  }
+}

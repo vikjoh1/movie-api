@@ -6,9 +6,8 @@ import mongoose from 'mongoose'
 
 const app = express()
 const PORT = process.env.PORT
-const MONGODB_URI = "mongodb+srv://vikjoh1:ZvlVRi9kyij52Rj1@movie-app.pwbn7st.mongodb.net/?retryWrites=true&w=majority"
 
-mongoose.connect(MONGODB_URI)
+mongoose.connect(process.env.MONGODB_URI!)
   .then(() => console.log('db connected!'))
   .catch(err => console.log(err))
 

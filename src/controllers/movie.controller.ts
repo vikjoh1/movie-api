@@ -34,3 +34,16 @@ export const setFavoriteMovie = async (req: Request, res: Response) => {
     res.status(500).send(error)
   }
 }
+
+export const saveMovie = async (req: Request, res: Response) => {
+  const movie = req.body as IMovie
+
+  try {
+    const movieData = new Movie(movie)
+    await movieData.save()
+    res.json(movieData)
+  } catch (error) {
+    log(error)
+    res.status(500).send(error)
+  }
+}
