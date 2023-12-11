@@ -6,10 +6,8 @@ import Movie, { IMovie, FavoriteMovies } from "../models/movie.model"
 
 export const getMovie = async (req: Request, res: Response) => {
   const title = String(req.params.title)
-
   try {
     const movieData = await getMovieByTitle(title)
-    
     res.json(movieData)
   } catch (error) {
     log(error)
@@ -18,15 +16,25 @@ export const getMovie = async (req: Request, res: Response) => {
 }
 
 export const setFavoriteMovie = async (req: Request, res: Response) => {
-  const imdbID = String(req.query.imdbID)
-  
+  const Title = String(req.body.Title)
+  const userId = req.user?.userId
+  if (!userId) {
+    return res.status(401).json({ error: 'Unauthorized' })
+  }
   try {
-    const movieData = await addMovieToFavorites(imdbID)
-    // save to FavoriteMovies
-    const favoriteMovies = new FavoriteMovies({
-      userId: "1",
-      movie: movieData
-    })
+    const movieData = await getMovieByTitle(Title)
+    let favoriteMovies = await FavoriteMovies.findOne({ userId: userId })
+    if (!favoriteMovies) {
+      favoriteMovies = new FavoriteMovies({
+        userId: userId,
+        movies: []
+      })
+    }
+    const isMovieInFavorites = favoriteMovies.movies.some(movie => movie.imdbID === movieData.imdbID)
+    if (isMovieInFavorites) {
+      return res.status(400).json({ error: 'Movie already in favorites.' })
+    }
+    favoriteMovies.movies.push(movieData)
     await favoriteMovies.save()
     res.json(movieData)
   } catch (error) {

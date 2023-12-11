@@ -18,7 +18,7 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
   const token = authHeader.split(' ')[1]
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as ITokenPayload
-    req.body.userId = decoded.userId
+    req.user = { userId: decoded.userId  }
     next()
   }
   catch (error) {

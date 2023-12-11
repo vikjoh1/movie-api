@@ -1,81 +1,81 @@
 import mongoose, { Document, Schema } from "mongoose"
 
 export interface IMovie extends Document {
-  title: string,
-  year: string,
-  rated: string,
-  released: string,
-  runtime: string,
-  genre: string,
-  director: string,
-  writer: string,
-  actors: string,
-  plot: string,
-  language: string,
-  country: string,
-  awards: string,
-  poster: string,
-  ratings: [
+  Title: string,
+  Year: string,
+  Rated: string,
+  Released: string,
+  Runtime: string,
+  Genre: string,
+  Director: string,
+  Writer: string,
+  Actors: string,
+  Plot: string,
+  Language: string,
+  Country: string,
+  Awards: string,
+  Poster: string,
+  Ratings: [
     {
-      source: string,
-      value: string
+      Source: string,
+      Value: string
     }
   ],
-  metascore: string,
+  Metascore: string,
   imdbRating: string,
   imdbVotes: string,
   imdbID: string,
-  type: string,
-  dvd: string,
-  boxOffice: string,
-  production: string,
-  website: string,
-  response: string
+  Type: string,
+  Dvd: string,
+  BoxOffice: string,
+  Production: string,
+  Website: string,
+  Response: string
 }
 
 export interface IFavoriteMovies extends Document {
   userId: string,
-  movie: IMovie
+  movies: IMovie[]
 }
 
 
 
 const MovieSchema: Schema = new Schema({
-  title: { type: String, required: true },
-  year: { type: String, required: true },
-  rated: { type: String, required: true },
-  released: { type: String, required: true },
-  runtime: { type: String, required: true },
-  genre: { type: String, required: true },
-  director: { type: String, required: true },
-  writer: { type: String, required: true },
-  actors: { type: String, required: true },
-  plot: { type: String, required: true },
-  language: { type: String, required: true },
-  country: { type: String, required: true },
-  awards: { type: String, required: true },
-  poster: { type: String, required: true },
-  ratings: [
+  Title: { type: String, required: true },
+  Year: { type: String, required: true },
+  Rated: { type: String, required: true },
+  Released: { type: String, required: true },
+  Runtime: { type: String, required: true },
+  Genre: { type: String, required: true },
+  Director: { type: String, required: true },
+  Writer: { type: String, required: true },
+  Actors: { type: String, required: true },
+  Plot: { type: String, required: true },
+  Language: { type: String, required: true },
+  Country: { type: String, required: true },
+  Awards: { type: String, required: true },
+  Poster: { type: String, required: true },
+  Ratings: [
     {
-      source: { type: String, required: true },
-      value: { type: String, required: true }
+      Source: { type: String, required: true },
+      Value: { type: String, required: true }
     }
   ],
-  metascore: { type: String, required: true },
+  Metascore: { type: String, required: true },
   imdbRating: { type: String, required: true },
   imdbVotes: { type: String, required: true },
   imdbID: { type: String, required: true },
-  type: { type: String, required: true },
-  dvd: { type: String, required: true },
-  boxOffice: { type: String, required: true },
-  production: { type: String, required: true },
-  website: { type: String, required: true },
-  response: { type: String, required: true }
+  Type: { type: String, required: true },
+  Dvd: { type: String, required: false },
+  BoxOffice: { type: String, required: true },
+  Production: { type: String, required: false },
+  Website: { type: String, required: false },
+  Response: { type: String, required: true }
 })
 
 const FavoriteMoviesSchema: Schema = new Schema({
   userId: { type: String, required: true },
-  movies: { type: [MovieSchema], required: true }
+  movies: [{ type: MovieSchema, required: true }]
 })
 
 export default mongoose.model<IMovie>('Movie', MovieSchema)

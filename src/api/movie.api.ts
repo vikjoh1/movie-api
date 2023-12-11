@@ -15,7 +15,11 @@ export const getMovieByTitle = async (title: string) => {
 export const addMovieToFavorites = async (imdbID: string) => {
   try {
     const response = await axios.get(`http://www.omdbapi.com/?apikey=${process.env.API_KEY}&i=${imdbID}`)
-    return response.data
+    const movieData = response.data
+    if (!movieData || movieData.Response === 'False') {
+      throw new Error(movieData.Error || 'Invalid response from OMDB API.')
+    }
+    return movieData
   } catch (error) {
     console.log(error)
     throw(error)

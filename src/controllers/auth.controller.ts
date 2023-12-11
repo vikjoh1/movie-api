@@ -53,7 +53,9 @@ export const signin = async (req: Request, res: Response) => {
       expiresIn: '1h',
     })
 
-    res.status(200).json({ message: 'Logged in successfully.', token })
+    res.status(200).json({ 
+      message: 'Logged in successfully.', token, userId: user._id, username: user.username 
+    })
   } catch (error) {
     res.status(500).json({ error: 'Failed to sign in.' })
   }
