@@ -3,6 +3,9 @@ dotenv.config()
 import axios from 'axios'
 
 export const getMovieByTitle = async (title: string) => {
+  if (!title) {
+    throw new Error('No title provided.')
+  }
   try {
     const response = await axios.get(`http://www.omdbapi.com/?apikey=${process.env.API_KEY}&t=${title}`)
     return response.data

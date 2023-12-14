@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { getMovie, setFavoriteMovie } from '../controllers/movie.controller'
+import { deleteFavoriteMovie, getMovie, myFavoriteMovies, setFavoriteMovie } from '../controllers/movie.controller'
 import { verifyToken } from "../middlewares/verifyToken"
 import { signup, signin, signout, getUser } from "../controllers/auth.controller"
 
@@ -11,5 +11,7 @@ router.post('/signout', signout)
 router.get('/getUser', verifyToken, getUser)
 router.get('/search/:title', verifyToken, getMovie)
 router.post('/save', verifyToken, setFavoriteMovie)
+router.get('/favorites', verifyToken, myFavoriteMovies)
+router.delete('/delete', verifyToken, deleteFavoriteMovie)
 
 export default router

@@ -29,9 +29,9 @@ export const signup = async (req: Request, res: Response) => {
       expiresIn: '1h',
     })
 
-    res.status(201).json({ message: 'User successfully created.', token })
+    return res.status(201).json({ message: 'User successfully created.', token })
   } catch (error) {
-    res.status(500).json({ error: 'Failed to create user.' })
+    return res.status(500).json({ error: 'Failed to create user.' })
   }
 }
 
@@ -54,25 +54,27 @@ export const signin = async (req: Request, res: Response) => {
     })
 
     res.status(200).json({ 
-      message: 'Logged in successfully.', token, userId: user._id, username: user.username 
+      message: 'Logged in successfully.', 
+      token, 
+      user: user 
     })
   } catch (error) {
-    res.status(500).json({ error: 'Failed to sign in.' })
+    return res.status(500).json({ error: 'Failed to sign in.' })
   }
 }
 
 export const signout = async (req: Request, res: Response) => {
   // maybe not needed as a endpoint?
-  res.status(200).json({ message: 'Logged out successfully.' })
+  return res.status(200).json({ message: 'Logged out successfully.' })
 }
 
 export const deleteUser = async (req: Request, res: Response) => {
   const { userId } = req.body
   try {
     await User.findByIdAndDelete(userId)
-    res.status(200).json({ message: 'User deleted successfully.' })
+    return res.status(200).json({ message: 'User deleted successfully.' })
   } catch (error) {
-    res.status(500).json({ error: 'Failed to delete user.' })
+    return res.status(500).json({ error: 'Failed to delete user.' })
   }
 }
 
@@ -94,9 +96,9 @@ export const changePassword = async (req: Request, res: Response) => {
     user.password = hashedPassword
     await user.save()
 
-    res.status(200).json({ message: 'Password changed successfully.' })
+    return res.status(200).json({ message: 'Password changed successfully.' })
   } catch (error) {
-    res.status(500).json({ error: 'Failed to change password.' })
+    return res.status(500).json({ error: 'Failed to change password.' })
   }
 }
 
@@ -108,8 +110,8 @@ export const getUser = async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Invalid user.' })
     }
 
-    res.status(200).json({ user })
+    return res.status(200).json({ user })
   } catch (error) {
-    res.status(500).json({ error: 'Failed to get user.' })
+    return res.status(500).json({ error: 'Failed to get user.' })
   }
 }
