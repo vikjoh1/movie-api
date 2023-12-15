@@ -78,7 +78,6 @@ export const deleteUser = async (req: Request, res: Response) => {
   }
 }
 
-
 export const changePassword = async (req: Request, res: Response) => {
   const { userId, oldPassword, newPassword } = req.body
   try {
