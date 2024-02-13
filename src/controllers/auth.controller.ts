@@ -69,7 +69,7 @@ export const signout = async (req: Request, res: Response) => {
 }
 
 export const deleteUser = async (req: Request, res: Response) => {
-  const { userId } = req.body
+  const userId = req.user?.userId
   try {
     await User.findByIdAndDelete(userId)
     return res.status(200).json({ message: 'User deleted successfully.' })
@@ -102,7 +102,7 @@ export const changePassword = async (req: Request, res: Response) => {
 }
 
 export const getUser = async (req: Request, res: Response) => {
-  const { userId } = req.body
+  const userId = req.user?.userId
   try {
     const user: IUser | null = await User.findById(userId)
     if (!user) {
